@@ -1,0 +1,25 @@
+---
+- name: install httpd
+  become: yes
+  yum:
+    pkg: httpd
+    state: installed
+
+- name: start httpd
+  become: yes
+  service:
+    name: httpd
+    state: started
+
+- name: open port 80
+  become: yes
+  firewalld:
+    service: http
+    permanent: true
+    state: enabled
+
+- name: restart firewalld
+  become: yes
+  service:
+    name: firewalld
+    state: restarted
